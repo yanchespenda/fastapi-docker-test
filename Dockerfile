@@ -19,7 +19,10 @@ WORKDIR /app/
 
 ENV PYTHONPATH=/app
 
+RUN pip3 install fastapi
+
 EXPOSE 80
+
 
 # Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)
 # And then will start Gunicorn with Uvicorn
