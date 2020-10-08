@@ -27,31 +27,3 @@ RUN apt-get install -y --fix-missing \
     zip \
     && apt-get clean && rm -rf /tmp/* /var/tmp/*
 
-RUN pip3 install uvicorn gunicorn
-
-COPY ./start.sh /start.sh
-RUN chmod +x /start.sh
-
-COPY ./gunicorn_conf.py /gunicorn_conf.py
-
-COPY ./start-reload.sh /start-reload.sh
-RUN chmod +x /start-reload.sh
-
-COPY ./app /app
-
-ENV PYTHONPATH=/app
-
-COPY ./requirements.txt /
-
-RUN pip3 install -r /requirements.txt
-
-
-WORKDIR /app/
-
-EXPOSE 80
-
-
-# Run the start script, it will check for an /app/prestart.sh script (e.g. for migrations)
-# And then will start Gunicorn with Uvicorn
-CMD ["/start.sh"]
-
